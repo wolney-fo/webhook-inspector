@@ -1,17 +1,18 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(["development", "test", "production"]),
+  NODE_ENV: z.enum(['development', 'test', 'production']),
   PORT: z.coerce.number().default(3333),
   DATABASE_URL: z.url(),
-});
+  GOOGLE_GENERATIVE_AI_API_KEY: z.string().nonempty(),
+})
 
-const _env = envSchema.safeParse(process.env);
+const _env = envSchema.safeParse(process.env)
 
 if (_env.success === false) {
-  console.error("Invalid environment variables");
+  console.error('Invalid environment variables')
 
-  throw new Error("Invalid environment variables");
+  throw new Error('Invalid environment variables')
 }
 
-export const env = _env.data;
+export const env = _env.data
